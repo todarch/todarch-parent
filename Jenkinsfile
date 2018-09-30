@@ -2,7 +2,12 @@ pipeline {
   agent any
 
   stages {
-    stage('Deploy') {
+    stage('Deploy Local') {
+      steps {
+        sh 'mvn -B -DskipTests clean deploy'
+      }
+    }
+    stage('Deploy Remote') {
       when {
         branch 'master'
       }
