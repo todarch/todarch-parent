@@ -23,7 +23,7 @@
         <checkstyle.version>8.8</checkstyle.version>
         <checkstyle.plugin.version>3.0.0</checkstyle.plugin.version>
         <!-- spring boot setup maven compiler for 3.8.0 -->
-        <maven.jar.plugin.version>3.1.0</maven.jar.plugin.version>
+        <maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
     </properties>
 
     <build>
