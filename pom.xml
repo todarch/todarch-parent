@@ -25,6 +25,14 @@
         <!-- spring boot setup maven compiler for 3.8.0 -->
         <maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
         <spring-cloud.version>Greenwich.M1</spring-cloud.version>
+        <!-- These values should be passed in at build time -->
+        <jib.version>0.9.11</jib.version>
+        <from.image>openjdk:11-jre-slim</from.image>
+        <build.number>000</build.number>
+        <commit.hash>local-build</commit.hash>
+        <build.user>local-build</build.user>
+        <build.repo>local-build</build.repo>
+        <circle.workflow.guid>local-build</circle.workflow.guid>
     </properties>
 
     <dependencyManagement>
@@ -76,6 +84,31 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>${maven.jar.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib.version}</version>
+                    <configuration>
+                        <from>
+                            <image>${from.image}</image>
+                        </from>
+                        <to>
+                            <image>registry.hub.docker.com/todarch/${artifactId}:${version}-b${build.number}</image>
+                        </to>
+                        <container>
+                            <jvmFlags>
+                                <jvmFlag>-DtbuildNum=${build.number}</jvmFlag>
+                                <jvmFlag>-Dtcommit=${commit.hash}</jvmFlag>
+                                <jvmFlag>-Dtuser=${build.user}</jvmFlag>
+                                <jvmFlag>-Dtrepo=${build.repo}</jvmFlag>
+                                <jvmFlag>-DworkflowGuid=${circle.workflow.guid}</jvmFlag>
+                            </jvmFlags>
+                            <ports>
+                                <port>8080</port>
+                            </ports>
+                        </container>
+                    </configuration>
                 </plugin>
             </plugins>
 
