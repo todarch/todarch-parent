@@ -94,15 +94,16 @@
                             <image>${from.image}</image>
                         </from>
                         <to>
-                            <image>registry.hub.docker.com/todarch/${artifactId}:${version}-b${build.number}</image>
+                            <image>registry.hub.docker.com/todarch/${project.artifactId}:${project.version}-${build.number}</image>
                         </to>
                         <container>
                             <jvmFlags>
-                                <jvmFlag>-DtbuildNum=${build.number}</jvmFlag>
-                                <jvmFlag>-Dtcommit=${commit.hash}</jvmFlag>
-                                <jvmFlag>-Dtuser=${build.user}</jvmFlag>
-                                <jvmFlag>-Dtrepo=${build.repo}</jvmFlag>
+                                <jvmFlag>-DbuildNum=${build.number}</jvmFlag>
+                                <jvmFlag>-Dcommit=${commit.hash}</jvmFlag>
+                                <jvmFlag>-Duser=${build.user}</jvmFlag>
+                                <jvmFlag>-Drepo=${build.repo}</jvmFlag>
                                 <jvmFlag>-DworkflowGuid=${circle.workflow.guid}</jvmFlag>
+                                <jvmFlag>-Dserver.port=8080</jvmFlag>
                             </jvmFlags>
                             <ports>
                                 <port>8080</port>
