@@ -33,6 +33,13 @@
         <build.user>local-build</build.user>
         <build.repo>local-build</build.repo>
         <circle.workflow.guid>local-build</circle.workflow.guid>
+
+        <!-- spring cloud contract configuration -->
+        <scc.maven.plugin.version>2.0.2.RELEASE</scc.maven.plugin.version>
+        <scc.http.baseClass>should.be.overridden.by.project</scc.http.baseClass>
+        <scc.messaging.baseClass>should.be.overridden.by.project</scc.messaging.baseClass>
+        <!-- override to LOCAL on development-->
+        <scc.contracts.mode>REMOTE</scc.contracts.mode>
     </properties>
 
     <dependencyManagement>
@@ -50,6 +57,30 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-contract-maven-plugin</artifactId>
+                    <version>${scc.maven.plugin.version}</version>
+                    <extensions>true</extensions> <!-- adds extra functionality to our build -->
+                    <configuration>
+                        <baseClassMappings>
+                            <baseClassMapping>
+                                <contractPackageRegex>.*http.*</contractPackageRegex>
+                                <baseClassFQN>${scc.http.baseClass}</baseClassFQN>
+                            </baseClassMapping>
+                            <baseClassMapping>
+                                <contractPackageRegex>.*messaging.*</contractPackageRegex>
+                                <baseClassFQN>${scc.messaging.baseClass}</baseClassFQN>
+                            </baseClassMapping>
+                        </baseClassMappings>
+                        <contractsMode>${scc.contracts.mode}</contractsMode>
+                        <contractsRepositoryUrl>https://raw.githubusercontent.com/todarch/todarch-mvn-repo/master</contractsRepositoryUrl>
+                        <contractDependency>
+                            <groupId>com.todarch</groupId>
+                            <artifactId>todarch-cdc</artifactId>
+                        </contractDependency>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
